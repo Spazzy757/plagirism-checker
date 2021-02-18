@@ -23,13 +23,14 @@ def check_duplicates():
     count = 0
     duplicate_count = 0
     r = redis.Redis(host=REDIS_PORT, port=REDIS_PORT, db=REDIS_DB)
-    file1 = open(HASH_FILE_NAME, 'rb')
-    lines = file1.readlines()
+    f = open(HASH_FILE_NAME, 'rb')
+    lines = f.readlines()
     for line in lines:
         if res:
             res = r.get(line.strip())
-             duplicate_count += int(res)
+            duplicate_count += int(res)
         count += 1
+    f.close()
     return  duplicate_count/count*100
 
 

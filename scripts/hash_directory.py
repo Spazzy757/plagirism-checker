@@ -18,7 +18,7 @@ def hash_directory():
     Takes in a directory and starts the report creation process
     """
     report = open(REPORT_NAME, "w")
-    calculate_hash_file(report, directory)
+    calculate_hash_file(report, TEST_DIRECTORY)
     report.close()
 
 
@@ -27,16 +27,16 @@ def calculate_hash_file(report, directory):
     Recursively goes through files in a directory and
     generates a hash for every line of every file
     """
-    for f in  listdir(directory):
-        if isfile(join(directory, f)):
-            file1 = open(join(directory, f), 'rb')
-            lines = file1.readlines()
+    for fi in  listdir(directory):
+        if isfile(join(directory, fi)):
+            f = open(join(directory, fi), 'rb')
+            lines = f.readlines()
             for line in lines:
                 hash_object = hashlib.md5(line.strip())
                 write_line_to_file(report, hash_object.hexdigest())
+            f.close()
         else:
-             calculate_hash_file(report, join(directory, f))
-
+            calculate_hash_file(report, join(directory, fi))
 
 def write_line_to_file(f, line):
     """
@@ -47,4 +47,4 @@ def write_line_to_file(f, line):
 
 
 if __name__ == "__main__":
-   hash_directory()
+    hash_directory()

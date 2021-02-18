@@ -21,12 +21,12 @@ def load_files_into_redis():
     """
     r = redis.Redis(host=REDIS_PORT, port=REDIS_PORT, db=REDIS_DB)
     for f in listdir(LOAD_DIRECTORY):
-        if isfile(join(directory, f)):
-            file1 = open(join(directory, f), 'rb')
-            lines = file1.readlines()
+        if isfile(join(LOAD_DIRECTORY, f)):
+            f = open(join(LOAD_DIRECTORY, f), 'rb')
+            lines = f.readlines()
             for line in lines:
                 res = r.set(line.strip(), 1)
-
+            f.close()
 
 if __name__ == "__main__":
     load_files_into_redis()
